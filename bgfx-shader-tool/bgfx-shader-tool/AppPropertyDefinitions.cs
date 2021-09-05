@@ -56,6 +56,22 @@ namespace bgfx_shader_tool
             }
         }
 
+        private bool _generateIos
+        {
+            get
+            {
+                if (BuildIos.IsChecked.HasValue)
+                {
+                    return BuildIos.IsChecked.Value;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+        }
+
         private bool _generateLinux
         {
             get
@@ -71,8 +87,24 @@ namespace bgfx_shader_tool
 
             }
         }
-        
-        
+
+        private bool _generateAndroid
+        {
+            get
+            {
+                if (BuildAndroid.IsChecked.HasValue)
+                {
+                    return BuildAndroid.IsChecked.Value;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+        }
+
+
 
     }
 }

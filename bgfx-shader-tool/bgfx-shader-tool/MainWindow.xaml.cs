@@ -63,6 +63,8 @@ namespace bgfx_shader_tool
             c.BuildMac = _generateMac;
             c.BuildLinux = _generateLinux;
             c.BuildEmbedded = _generateEmbeddedShader;
+            c.BuildIos = _generateIos;
+            c.BuildAndroid = _generateAndroid;
             c.Path = _shaderFilePath;
             c.ShaderType = GetShaderCompileType();
 
@@ -129,6 +131,16 @@ namespace bgfx_shader_tool
             if(options.BuildLinux)
             {
                 CompileLinux(options, shaderName, shadercDir, currentDir);
+            }
+
+            if (options.BuildAndroid)
+            {
+                CompileAndroid(options, shaderName, shadercDir, currentDir);
+            }
+
+            if (options.BuildIos)
+            {
+                CompileIos(options, shaderName, shadercDir, currentDir);
             }
 
             if (options.BuildEmbedded)
@@ -235,11 +247,25 @@ namespace bgfx_shader_tool
             CompilePlatform(options, shadercDir, shaderName, "mac", macDir, currentDir);
         }
 
+        private void CompileIos(CompileOptions options, string shaderName, string shadercDir, string currentDir)
+        {
+            string macDir = options.ShaderRootPath + "/ios";
+            CheckIfDirExistsAndCreateIfNot(macDir);
+            CompilePlatform(options, shadercDir, shaderName, "ios", macDir, currentDir);
+        }
+
         private void CompileLinux(CompileOptions options, string shaderName, string shadercDir, string currentDir)
         {
             string linuxDir = options.ShaderRootPath + "/linux";
             CheckIfDirExistsAndCreateIfNot(linuxDir);
             CompilePlatform(options, shadercDir, shaderName, "linux", linuxDir, currentDir);
+        }
+
+        private void CompileAndroid(CompileOptions options, string shaderName, string shadercDir, string currentDir)
+        {
+            string linuxDir = options.ShaderRootPath + "/android";
+            CheckIfDirExistsAndCreateIfNot(linuxDir);
+            CompilePlatform(options, shadercDir, shaderName, "android", linuxDir, currentDir);
         }
 
         private void CheckIfDirExistsAndCreateIfNot(string path)

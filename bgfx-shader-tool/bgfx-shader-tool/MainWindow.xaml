@@ -52,7 +52,9 @@
             <TextBlock Margin="5" FontFamily="Consolas" FontSize="18" TextAlignment="Center">Rendering Backends</TextBlock>
             <CheckBox Name="BuildWindows" Margin="2" FontSize="18" FontFamily="Consolas">Build Windows</CheckBox>
             <CheckBox Name="BuildMac" Margin="2" FontSize="18" FontFamily="Consolas">Build Mac</CheckBox>
+            <CheckBox Name="BuildIos" Margin="2" FontSize="18" FontFamily="Consolas">Build IOS</CheckBox>
             <CheckBox Name="BuildLinux" Margin="2" FontSize="18" FontFamily="Consolas">Build Linux</CheckBox>
+            <CheckBox Name="BuildAndroid" Margin="2" FontSize="18" FontFamily="Consolas">Build Android</CheckBox>
             <Separator Margin="5"></Separator>
             <CheckBox Name="CreateEmbeddedShader" Margin="5" FontSize="18" FontFamily="Consolas">Build Embedded Shader</CheckBox>
             <Button Name="ButtonCompileShader" Margin="5" FontSize="18" FontFamily="Consolas" Click="ButtonCompileShader_Click">Compile</Button>

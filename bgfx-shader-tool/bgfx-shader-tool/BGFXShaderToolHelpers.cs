@@ -17,7 +17,9 @@ namespace bgfx_shader_tool
     {
         public bool BuildWindows;
         public bool BuildMac;
+        public bool BuildIos;
         public bool BuildLinux;
+        public bool BuildAndroid;
         public bool BuildEmbedded;
         public ShaderCompileType ShaderType;
         public string Path
@@ -122,6 +124,10 @@ namespace bgfx_shader_tool
         {
             "metal",
         };
+        public static string[] VALID_IOS_PROFILES =
+        {
+            "metal",
+        };
 
         public static string[] VALID_LINUX_PROFILES =
         {
@@ -135,7 +141,13 @@ namespace bgfx_shader_tool
             "310_es",
             "320_es"
         };
-
+        public static string[] VALID_ANDROID_PROFILES =
+        {
+            "spirv",
+            "300_es",
+            "310_es",
+            "320_es"
+        };
         public static string[] GetPlatformProfiles(string platform)
         {
             if(platform == "windows")
@@ -151,6 +163,14 @@ namespace bgfx_shader_tool
             if(platform == "mac")
             {
                 return VALID_MAC_PROFILES;
+            }
+            if (platform == "ios")
+            {
+                return VALID_IOS_PROFILES;
+            }
+            if (platform == "android")
+            {
+                return VALID_ANDROID_PROFILES;
             }
 
             return new string[0];
