@@ -162,6 +162,28 @@ namespace bgfx_shader_tool
                 }
 
             }
+
+            if(options.BuildEmbedded)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach(string file in _trackedEmbeddedShaderPaths)
+                {
+                    if (File.Exists(file))
+                    {
+                        string fileText = File.ReadAllText(file);
+                        if (!string.IsNullOrEmpty(fileText))
+                        {
+                            sb.AppendLine(fileText);
+                            sb.AppendLine();
+                        }
+                        File.Delete(file);
+                    }
+                }
+                string amalgamatedShader = sb.ToString();
+                string amalgamatedShaderLocation = options.ShaderRootPath + "/" + shaderName + "_embedded.h";
+                File.WriteAllText(amalgamatedShaderLocation, amalgamatedShader);
+            }
         }
 
         private void CheckIfDirExistsAndCreateIfNot(string path)

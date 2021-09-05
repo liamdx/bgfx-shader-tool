@@ -18,6 +18,14 @@
             <RowDefinition Height ="768"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <Border BorderThickness="0.5" CornerRadius="5" BorderBrush="DarkSlateGray" Grid.Column="0" Grid.Row="0"/>
+        <Border BorderThickness="0.5" CornerRadius="5" BorderBrush="DarkSlateGray" Grid.Column="1" Grid.Row="0"/>
+        <Border BorderThickness="0.5" CornerRadius="5" BorderBrush="DarkSlateGray" Grid.Column="0" Grid.Row="1"/>
+        <Border BorderThickness="0.5" CornerRadius="5" BorderBrush="DarkSlateGray" Grid.Column="1" Grid.Row="1"/>
+        <Border BorderThickness="0.5" CornerRadius="5" BorderBrush="DarkSlateGray" Grid.Column="0" Grid.Row="2"/>
+        <Border BorderThickness="0.5" CornerRadius="5" BorderBrush="DarkSlateGray" Grid.Column="1" Grid.Row="2"/>
+        <Border BorderThickness="0.5" CornerRadius="5" BorderBrush="DarkSlateGray" Grid.Column="0" Grid.Row="3"/>
+        <Border BorderThickness="0.5" CornerRadius="5" BorderBrush="DarkSlateGray" Grid.Column="1" Grid.Row="3"/>
         <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" Margin="5" TextAlignment="Center" FontFamily="Consolas" Background="CadetBlue">BGFX Shader Path</TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="0" FontSize="16" Margin="5" TextAlignment="Center" FontFamily="Consolas" Background="DarkSeaGreen">Output Path</TextBlock>
         <TextBox Name="ShaderPathText" Grid.Row="0" Grid.Column="1" FontSize="18" TextAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Margin="5" Background="DarkGray">Shader Path</TextBox>
