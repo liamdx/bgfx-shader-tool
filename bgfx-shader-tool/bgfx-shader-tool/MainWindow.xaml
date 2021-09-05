@@ -6,22 +6,50 @@
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:local="clr-namespace:bgfx_shader_tool"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1024" Width="800">
+        Title="BGFX Shader Tool" Height="1024" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height ="768"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Content="Path to shader" Margin="5"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Margin="5"/>
-        <avalonEdit:TextEditor
-            Grid.Row="1"
-            Name="textEditor"
-            FontFamily="Consolas"
-            SyntaxHighlighting="C#"
-            FontSize="12pt"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" Margin="5" TextAlignment="Center" FontFamily="Consolas" Background="CadetBlue">BGFX Shader Path</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" FontSize="16" Margin="5" TextAlignment="Center" FontFamily="Consolas" Background="DarkSeaGreen">Output Path</TextBlock>
+        <TextBox Name="ShaderPathText" Grid.Row="0" Grid.Column="1" FontSize="18" TextAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Margin="5" Background="DarkGray">Shader Path</TextBox>
+        <TextBox Name="ShaderOutputText" Grid.Row="1" Grid.Column="1" FontSize="18" TextAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Margin="5" Background="DarkGray">Shader Output Path</TextBox>
+        <avalonEdit:TextEditor Name="ShaderTextEditor" Grid.Row="2" Grid.Column="1" FontFamily="Consolas" SyntaxHighlighting="C#" FontSize="14" Margin="5"/>
+        <StackPanel Grid.Row="2" Grid.Column="0">
+            <Separator Margin="5"></Separator>
+            <Button Name="ButtonBrowseShaderSourcePath" Margin="5" FontSize="18" FontFamily="Consolas" Click="ButtonBrowseShaderSourcePath_Click">Browse Shader Path</Button>
+            <Button Name="ButtonBrowseShaderOutputPath" Margin="5" FontSize="18" FontFamily="Consolas" Click="ButtonBrowseShaderOutputPath_Click">Browse Output Path</Button>
+            <Separator Margin="5"></Separator>
+            <ComboBox Name="ShaderTypeCombo" Margin="5">
+                <ComboBoxItem>
+                    <TextBlock FontFamily="Consolas" FontSize="18">Vertex</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock FontFamily="Consolas" FontSize="18">Fragment</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock FontFamily="Consolas" FontSize="18">Compute</TextBlock>
+                </ComboBoxItem>
+            </ComboBox>
+            <Button Name="ButtonLoadShaderTextFromPath" Margin="5"  FontSize="18" FontFamily="Consolas" Click="ButtonLoadShaderTextFromPath_Click">Load Shader</Button>
+            <Separator Margin="5"></Separator>
+            <TextBlock Margin="5" FontFamily="Consolas" FontSize="18" TextAlignment="Center">Rendering Backends</TextBlock>
+            <CheckBox Name="BuildWindows" Margin="2" FontSize="18" FontFamily="Consolas">Build Windows</CheckBox>
+            <CheckBox Name="BuildMac" Margin="2" FontSize="18" FontFamily="Consolas">Build Mac</CheckBox>
+            <CheckBox Name="BuildLinux" Margin="2" FontSize="18" FontFamily="Consolas">Build Linux</CheckBox>
+            <Separator Margin="5"></Separator>
+            <CheckBox Name="CreateEmbeddedShader" Margin="5" FontSize="18" FontFamily="Consolas">Build Embedded Shader</CheckBox>
+            <Button Name="ButtonCompileShader" Margin="5" FontSize="18" FontFamily="Consolas" Click="ButtonCompileShader_Click">Compile</Button>
+        </StackPanel>
+        <avalonEdit:TextEditor Name="ConsoleOutput" Grid.Row="3" Grid.Column="1" FontFamily="Consolas" SyntaxHighlighting="Console" FontSize="14" Margin="5"/>
     </Grid>
+    
 </Window>

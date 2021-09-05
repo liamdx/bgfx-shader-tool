@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "bgfx-shader-tool": {
+      "commandName": "Project",
+      "workingDirectory": "."
+    }
+  }
+}

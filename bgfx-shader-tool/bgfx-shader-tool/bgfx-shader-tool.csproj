@@ -6,6 +6,7 @@
     <RootNamespace>bgfx_shader_tool</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <StartupObject>bgfx_shader_tool.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
