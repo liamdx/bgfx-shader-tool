@@ -72,38 +72,7 @@ namespace bgfx_shader_tool
             }
         }
         
-        public static string[] VALID_WINDOWS_PROFILES =
-        {
-            "s_3_0",
-            "s_4_0",
-            "s_5_0",
-            "spirv",
-            "410",
-            "420",
-            "430",
-            "440",
-        };
-
-        public static string[] VALID_MAC_PROFILES =
-        {
-            "metal",
-        };
-
-        public static string[] VALID_LINUX_PROFILES =
-        {
-            "metal",
-            "spirv",
-            "330",
-            "400",
-            "410",
-            "420",
-            "430",
-            "440",
-            "100_es",
-            "300_es",
-            "310_es",
-            "320_es"
-        };
+        
 
     }
 }

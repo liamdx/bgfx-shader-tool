@@ -558,10 +558,6 @@ bvec2 greaterThan(vec2 _a, vec2 _b) { return _a > _b; }
 bvec3 greaterThan(vec3 _a, vec3 _b) { return _a > _b; }
 bvec4 greaterThan(vec4 _a, vec4 _b) { return _a > _b; }
 
-bvec2 greaterThanEqual(vec2 _a, vec2 _b) { return _a >= _b; }
-bvec3 greaterThanEqual(vec3 _a, vec3 _b) { return _a >= _b; }
-bvec4 greaterThanEqual(vec4 _a, vec4 _b) { return _a >= _b; }
-
 bvec2 notEqual(vec2 _a, vec2 _b) { return _a != _b; }
 bvec3 notEqual(vec3 _a, vec3 _b) { return _a != _b; }
 bvec4 notEqual(vec4 _a, vec4 _b) { return _a != _b; }

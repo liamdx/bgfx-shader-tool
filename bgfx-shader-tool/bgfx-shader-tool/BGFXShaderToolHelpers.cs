@@ -101,6 +101,60 @@ namespace bgfx_shader_tool
                 return ret.Substring(lastForwardslash + 1);
             }
         }
+
+        public static string[] VALID_WINDOWS_PROFILES =
+        {
+            "vs_3_0",
+            "ps_3_0",
+            "vs_4_0",
+            "ps_4_0",
+            "vs_5_0",
+            "ps_5_0",
+            "cs_5_0",
+            "spirv",
+            "410",
+            "420",
+            "430",
+            "440",
+        };
+
+        public static string[] VALID_MAC_PROFILES =
+        {
+            "metal",
+        };
+
+        public static string[] VALID_LINUX_PROFILES =
+        {
+            "spirv",
+            "410",
+            "420",
+            "430",
+            "440",
+            "100_es",
+            "300_es",
+            "310_es",
+            "320_es"
+        };
+
+        public static string[] GetPlatformProfiles(string platform)
+        {
+            if(platform == "windows")
+            {
+                return VALID_WINDOWS_PROFILES;
+            }
+
+            if(platform == "linux")
+            {
+                return VALID_LINUX_PROFILES;
+            }
+
+            if(platform == "mac")
+            {
+                return VALID_MAC_PROFILES;
+            }
+
+            return new string[0];
+        }
     }
 
     

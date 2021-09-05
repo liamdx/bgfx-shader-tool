@@ -6,6 +6,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Text;
+using static System.Windows.Forms.Design.AxImporter;
 
 namespace bgfx_shader_tool
 {
@@ -108,72 +109,43 @@ namespace bgfx_shader_tool
 
         private void Compile(CompileOptions options)
         {
-            if(options.ShaderType == ShaderCompileType.Invalid)
+            string shaderName = BGFXShaderToolHelpers.GetShaderNameFromFilePath(options.Path);
+            string currentDir = Directory.GetCurrentDirectory();
+            string shadercDir = currentDir + BGFXShaderToolHelpers.SHADERC_PATH;
+
+            if (options.ShaderType == ShaderCompileType.Invalid)
             {
                 PrintMessageToConsole("Invalid shader type.");
             }
             if(options.BuildWindows)
             {
-                CompileWindows(options);
+                CompileWindows(options, shaderName, shadercDir, currentDir);
             }
-        }
-
-        private void CompileWindows(CompileOptions options)
-        {
-            string currentDir = Directory.GetCurrentDirectory();
-            string finalShadercDir = currentDir + BGFXShaderToolHelpers.SHADERC_PATH;
-            string windowsDir = options.ShaderRootPath + "/windows";
-            CheckIfDirExistsAndCreateIfNot(windowsDir);
-
-            string shaderName = BGFXShaderToolHelpers.GetShaderNameFromFilePath(options.Path);
-
-            foreach (string profile in VALID_WINDOWS_PROFILES)
+            if(options.BuildMac)
             {
-                StringBuilder argBuilder = new StringBuilder();
-                argBuilder.Append($"-f {options.Path} ");
-                string outputFileName = BGFXShaderToolHelpers.GetFinalOutputShaderPath(windowsDir, shaderName, profile, options.BuildEmbedded);
-                
-                if(options.BuildEmbedded)
-                {
-                    _trackedEmbeddedShaderPaths.Add(outputFileName);
-                }
-
-                argBuilder.Append($"-o {outputFileName} ");
-                argBuilder.Append(BGFXShaderToolHelpers.GetTypeArgument(options.ShaderType) + " ");
-                argBuilder.Append("--platform windows ");
-                argBuilder.Append($"--profile {profile} ");
-                if(options.BuildEmbedded)
-                {
-                    argBuilder.Append($"--bin2c {shaderName}_{profile}");
-                }
-                using (Process p = new Process())
-                {
-                    p.StartInfo.UseShellExecute = false;
-                    p.StartInfo.FileName = finalShadercDir;
-                    p.StartInfo.CreateNoWindow = true;
-
-                    p.StartInfo.Arguments = argBuilder.ToString();
-                    p.StartInfo.RedirectStandardOutput = true;
-                    p.Start();
-
-                    ConsoleOutput.Text += p.StandardOutput.ReadToEnd();
-                    ConsoleOutput.ScrollToEnd();
-                    p.WaitForExit();
-                }
-
+                CompileMac(options, shaderName, shadercDir, currentDir);
             }
 
-            if(options.BuildEmbedded)
+            if(options.BuildLinux)
+            {
+                CompileLinux(options, shaderName, shadercDir, currentDir);
+            }
+
+            if (options.BuildEmbedded)
             {
                 StringBuilder sb = new StringBuilder();
 
-                foreach(string file in _trackedEmbeddedShaderPaths)
+                foreach (string file in _trackedEmbeddedShaderPaths)
                 {
                     if (File.Exists(file))
                     {
                         string fileText = File.ReadAllText(file);
                         if (!string.IsNullOrEmpty(fileText))
                         {
+                            if(sb.ToString().Contains(fileText))
+                            {
+                                continue;
+                            }
                             sb.AppendLine(fileText);
                             sb.AppendLine();
                         }
@@ -184,6 +156,90 @@ namespace bgfx_shader_tool
                 string amalgamatedShaderLocation = options.ShaderRootPath + "/" + shaderName + "_embedded.h";
                 File.WriteAllText(amalgamatedShaderLocation, amalgamatedShader);
             }
+        }
+        private void CompilePlatform(CompileOptions options, string shadercDir, string shaderName, string platform, string platformDir, string currentDir)
+        {
+            foreach (string profile in BGFXShaderToolHelpers.GetPlatformProfiles(platform))
+            {
+                StringBuilder argBuilder = new StringBuilder();
+                argBuilder.Append($"-f {options.Path} ");
+                string outputFileName = BGFXShaderToolHelpers.GetFinalOutputShaderPath(platformDir, shaderName, profile, false);
+
+                argBuilder.Append($"-o {outputFileName} ");
+                argBuilder.Append(BGFXShaderToolHelpers.GetTypeArgument(options.ShaderType) + " ");
+                argBuilder.Append($"--platform {platform} ");
+                argBuilder.Append($"--profile {profile} ");
+                //--varyingdef <file path>  Path to varying.def.sc file.
+                argBuilder.Append($"--varyingdef {options.ShaderRootPath}/varying.def.sc");
+
+                using (Process p = new Process())
+                {
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.FileName = shadercDir;
+                    p.StartInfo.CreateNoWindow = true;
+
+                    p.StartInfo.Arguments = argBuilder.ToString();
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.Start();
+
+                    ConsoleOutput.Text += p.StandardOutput.ReadToEnd();
+                    ConsoleOutput.ScrollToEnd();
+                    p.WaitForExit();
+                }
+            }
+
+            if(options.BuildEmbedded)
+            {
+                foreach (string profile in BGFXShaderToolHelpers.GetPlatformProfiles(platform))
+                {
+                    StringBuilder argBuilder = new StringBuilder();
+                    argBuilder.Append($"-f {options.Path} ");
+                    string outputFileName = BGFXShaderToolHelpers.GetFinalOutputShaderPath(platformDir, shaderName, profile, options.BuildEmbedded);
+                                        
+                    _trackedEmbeddedShaderPaths.Add(outputFileName);
+                    
+                    argBuilder.Append($"-o {outputFileName} ");
+                    argBuilder.Append(BGFXShaderToolHelpers.GetTypeArgument(options.ShaderType) + " ");
+                    argBuilder.Append($"--platform {platform} ");
+                    argBuilder.Append($"--profile {profile} ");
+                    argBuilder.Append($"--bin2c {shaderName}_{profile}");
+                    
+                    using (Process p = new Process())
+                    {
+                        p.StartInfo.UseShellExecute = false;
+                        p.StartInfo.FileName = shadercDir;
+                        p.StartInfo.CreateNoWindow = true;
+
+                        p.StartInfo.Arguments = argBuilder.ToString();
+                        p.StartInfo.RedirectStandardOutput = true;
+                        p.Start();
+
+                        ConsoleOutput.Text += p.StandardOutput.ReadToEnd();
+                        ConsoleOutput.ScrollToEnd();
+                        p.WaitForExit();
+                    }
+                }
+            }
+        }
+        private void CompileWindows(CompileOptions options, string shaderName, string shadercDir, string currentDir)
+        {           
+            string windowsDir = options.ShaderRootPath + "/windows";
+            CheckIfDirExistsAndCreateIfNot(windowsDir);
+            CompilePlatform(options, shadercDir, shaderName, "windows", windowsDir, currentDir);        
+        }
+
+        private void CompileMac(CompileOptions options, string shaderName, string shadercDir, string currentDir)
+        {
+            string macDir = options.ShaderRootPath + "/mac";
+            CheckIfDirExistsAndCreateIfNot(macDir);
+            CompilePlatform(options, shadercDir, shaderName, "mac", macDir, currentDir);
+        }
+
+        private void CompileLinux(CompileOptions options, string shaderName, string shadercDir, string currentDir)
+        {
+            string linuxDir = options.ShaderRootPath + "/linux";
+            CheckIfDirExistsAndCreateIfNot(linuxDir);
+            CompilePlatform(options, shadercDir, shaderName, "linux", linuxDir, currentDir);
         }
 
         private void CheckIfDirExistsAndCreateIfNot(string path)
