@@ -71,7 +71,7 @@ namespace bgfx_shader_tool
             Compile(c);
         }
 
-        private void ButtonLoadShaderTextFromPath_Click(object sender, RoutedEventArgs e)
+        private void LoadShader()
         {
             if(string.IsNullOrEmpty(_shaderFilePath))
             {
@@ -105,6 +105,7 @@ namespace bgfx_shader_tool
                 {
                     _shaderFilePath = dialog.FileName;
                     ShaderPathText.Text = _shaderFilePath;
+                    LoadShader();
                 }
             }
         }

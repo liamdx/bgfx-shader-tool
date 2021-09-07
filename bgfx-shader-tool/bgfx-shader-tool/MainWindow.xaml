@@ -33,7 +33,7 @@
         <avalonEdit:TextEditor Name="ShaderTextEditor" Grid.Row="2" Grid.Column="1" FontFamily="Consolas" SyntaxHighlighting="C#" FontSize="14" Margin="5"/>
         <StackPanel Grid.Row="2" Grid.Column="0">
             <Separator Margin="5"></Separator>
-            <Button Name="ButtonBrowseShaderSourcePath" Margin="5" FontSize="18" FontFamily="Consolas" Click="ButtonBrowseShaderSourcePath_Click">Browse Shader Path</Button>
+            <Button Name="ButtonBrowseShaderSourcePath" Margin="5" FontSize="18" FontFamily="Consolas" Click="ButtonBrowseShaderSourcePath_Click">Load Shader From Path</Button>
             <Button Name="ButtonBrowseShaderOutputPath" Margin="5" FontSize="18" FontFamily="Consolas" Click="ButtonBrowseShaderOutputPath_Click">Browse Output Path</Button>
             <Separator Margin="5"></Separator>
             <ComboBox Name="ShaderTypeCombo" Margin="5">
@@ -47,7 +47,6 @@
                     <TextBlock FontFamily="Consolas" FontSize="18">Compute</TextBlock>
                 </ComboBoxItem>
             </ComboBox>
-            <Button Name="ButtonLoadShaderTextFromPath" Margin="5"  FontSize="18" FontFamily="Consolas" Click="ButtonLoadShaderTextFromPath_Click">Load Shader</Button>
             <Separator Margin="5"></Separator>
             <TextBlock Margin="5" FontFamily="Consolas" FontSize="18" TextAlignment="Center">Rendering Backends</TextBlock>
             <CheckBox Name="BuildWindows" Margin="2" FontSize="18" FontFamily="Consolas">Build Windows</CheckBox>
